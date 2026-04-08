@@ -1288,14 +1288,22 @@ input[type=range]::-moz-range-thumb {
 
 .lb-name-row {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 12px 18px;
+  gap: 14px;
+  padding: 28px 18px 14px; /* Aumentado para abaixar a caixa */
   border-top: 1px solid rgba(0, 255, 255, 0.2);
   animation: lb-fadein 0.3s 0.1s ease both;
 }
 
 .lb-name-row.hidden { display: none; }
+
+.lb-name-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
 
 .lb-name-input {
   flex: 1;
@@ -1307,7 +1315,6 @@ input[type=range]::-moz-range-thumb {
   font-size: clamp(0.9rem, 2.5vw, 1.05rem);
   letter-spacing: 2px;
   padding: 8px 12px;
-  text-transform: uppercase;
   outline: none;
   box-shadow: 0 0 12px rgba(0, 255, 255, 0.2), inset 0 0 8px rgba(0, 255, 255, 0.05);
   user-select: text;
@@ -1317,6 +1324,18 @@ input[type=range]::-moz-range-thumb {
 
 .lb-name-input::placeholder { color: rgba(0, 255, 255, 0.3); }
 .lb-name-input:focus { box-shadow: 0 0 20px rgba(0, 255, 255, 0.45), inset 0 0 10px rgba(0, 255, 255, 0.1); }
+
+.lb-name-status {
+  font-size: 0.78rem;
+  font-weight: bold;
+  color: #f44;
+  text-align: center;
+  padding: 0;
+  min-height: 1.2em;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 
 .lb-confirm-btn {
   width: auto;

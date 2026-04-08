@@ -68,7 +68,7 @@
       <!-- Shop Menu -->
       <div id="shop-menu" class="screen" style="display: none;">
         <h2>GARAGE</h2>
-        <div class="top-score-display">TOP SCORE: <span id="shop-top-score">0 PTS | DISTANCE 0 M</span></div>
+        <div class="top-score-display">TOP SCORE: <span id="shop-top-score">0 PTS | DISTANCE 0.0Km</span></div>
         <div class="coins-display">COINS: <span id="shop-coins">0</span></div>
         <button id="btn-free-coins" class="btn-free-coins">MOEDAS GRÁTIS</button>
 
@@ -162,8 +162,11 @@
             <div id="lb-list" class="lb-list"></div>
           </div>
           <div class="lb-name-row hidden" id="lb-name-row">
-            <input id="lb-name-input" class="lb-name-input" type="text" maxlength="16" placeholder="SEU NOME" autocomplete="off" spellcheck="false" />
-            <button id="lb-confirm-btn" class="btn lb-confirm-btn">OK</button>
+            <div id="lb-name-status" class="lb-name-status"></div>
+            <div class="lb-name-input-group">
+              <input id="lb-name-input" class="lb-name-input" type="text" maxlength="25" placeholder="SEU NOME" autocomplete="off" spellcheck="false" />
+              <button id="lb-confirm-btn" class="btn lb-confirm-btn">OK</button>
+            </div>
           </div>
           <button id="lb-skip-btn" class="lb-skip-btn">PULAR</button>
         </div>
@@ -172,7 +175,7 @@
       <!-- Game Over -->
       <div id="game-over" class="screen" style="display: none;">
         <h2>FAILED</h2>
-        <div id="final-score">DISTANCE: 0 M</div>
+        <div id="final-score"></div>
         <div id="gameover-car-select" class="gameover-car-select">
           <div class="gameover-car-select-title">CAR FOR RESTART</div>
           <div id="gameover-cars-grid" class="gameover-cars-grid"></div>
