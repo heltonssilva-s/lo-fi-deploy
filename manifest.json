@@ -1,0 +1,10 @@
+{
+  "name": "Lo-Fi Super Neon Drive",
+  "short_name": "Lo-Fi Neon",
+  "description": "Jogo de corrida vaporwave com formas geométricas",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#0a001a",
+  "theme_color": "#0a001a"
+}

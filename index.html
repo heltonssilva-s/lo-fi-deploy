@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0a001a">
+  <title>Lo-Fi Super Neon Drive</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://pixijs.download/v8.17.1/pixi.min.js"
+    onerror="this.onerror=null;this.src='node_modules/pixi.js/dist/pixi.min.js';"></script>
+</head>
+
+<body>
+  <div id="game-container">
+    <div id="ui-layer">
+      <!-- Main Menu -->
+      <div id="main-menu" class="screen" style="display: flex;">
+        <img class="logo" src="img/LogoLoFISuperNEon.png" alt="Lo-Fi Super Neon Drive">
+        <span class="beta-tag">[BETA-TEST]</span>
+        <button id="btn-start" class="btn">PLAY</button>
+        <button id="btn-shop" class="btn">SHOP</button>
+        <button id="btn-toprank" class="btn">TOP RANK</button>
+        <button id="btn-settings" class="btn">SETTINGS</button>
+      </div>
+
+      <!-- Top Rank Screen -->
+      <div id="toprank-menu" class="screen" style="display: none;">
+        <h2>TOP RANK</h2>
+        <div class="toprank-table-wrap glass">
+          <div class="toprank-header">
+            <span class="tr-col-rank">#</span>
+            <span class="tr-col-name">NOME</span>
+            <span class="tr-col-score">PONTOS</span>
+            <span class="tr-col-dist">DIST</span>
+          </div>
+          <div id="toprank-list" class="toprank-list"></div>
+        </div>
+        <button id="btn-toprank-back" class="btn">BACK</button>
+      </div>
+
+      <!-- Settings Menu -->
+      <div id="settings-menu" class="screen" style="display: none;">
+        <h2>AUDIO CONFIG</h2>
+        <div class="settings-content glass">
+          <div class="setting-item">
+            <span class="label">MUSIC VOLUME</span>
+            <input type="range" id="slider-music" min="0" max="1" step="0.1" value="0.8">
+          </div>
+          <div class="setting-item">
+            <span class="label">MOTOR VOLUME</span>
+            <input type="range" id="slider-engine" min="0" max="1" step="0.1" value="0.4">
+          </div>
+          <div class="setting-item">
+            <span class="label">AMBIENT VOLUME</span>
+            <input type="range" id="slider-ambient" min="0" max="1" step="0.1" value="0.5">
+          </div>
+        </div>
+        <button id="btn-settings-reset-audio" class="btn btn-settings-reset">DEFAULT</button>
+        <button id="btn-settings-back" class="btn">BACK</button>
+      </div>
+
+      <!-- Shop Menu -->
+      <div id="shop-menu" class="screen" style="display: none;">
+        <h2>GARAGE</h2>
+        <div class="top-score-display">TOP SCORE: <span id="shop-top-score">0 PTS | DISTANCE 0 M</span></div>
+        <div class="coins-display">COINS: <span id="shop-coins">0</span></div>
+        <button id="btn-free-coins" class="btn-free-coins">MOEDAS GRÁTIS</button>
+
+        <div class="shop-section shop-section-cars">
+          <h3>CARS</h3>
+          <div class="shop-grid" id="cars-grid"></div>
+        </div>
+
+        <div class="shop-section">
+          <h3>TRACKS</h3>
+          <div class="shop-grid" id="tracks-grid"></div>
+        </div>
+
+        <div class="shop-section">
+          <h3>MUSIC</h3>
+          <div class="shop-grid" id="songs-grid"></div>
+        </div>
+
+        <div id="shop-reset-modal" class="shop-reset-modal hidden">
+          <div class="shop-reset-card">
+            <h3>RESET SAVE?</h3>
+            <p id="reset-cost-label">COST: 100 COINS</p>
+            <p id="reset-result-label">COINS AFTER RESET: 0</p>
+            <p class="shop-reset-warn">PURCHASED CARS, TRACKS, AND MUSIC WILL RETURN TO DEFAULT.</p>
+            <p class="shop-reset-question">DELETE TOP SCORE + DISTANCE TOO?</p>
+            <label class="shop-reset-option">
+              <input type="checkbox" id="reset-clear-topscore">
+              <span>YES, CLEAR MY BEST RECORD</span>
+            </label>
+            <div class="shop-reset-actions">
+              <button id="btn-reset-confirm" class="btn btn-reset-save">CONFIRM</button>
+              <button id="btn-reset-cancel" class="btn">CANCEL</button>
+            </div>
+          </div>
+        </div>
+
+        <button id="btn-reset-save" class="btn btn-reset-save">RESET SAVE (-100 COINS)</button>
+        <button id="btn-shop-back" class="btn">BACK</button>
+      </div>
+
+      <!-- HUD -->
+      <div id="hud" class="screen" style="display: none;">
+        <div class="hud-top">
+          <div class="hud-widget glass">
+            <span class="label">SCORE</span>
+            <div id="score-value">00000000</div>
+          </div>
+          <div class="hud-widget glass">
+            <span class="label">COINS</span>
+            <div id="coins">0</div>
+          </div>
+        </div>
+        <div id="powerup-status" class="hidden">
+          <span id="powerup-text">TURBO ACTIVE!</span>
+          <div id="powerup-bar-wrap">
+            <div id="powerup-bar"></div>
+          </div>
+        </div>
+
+        <div class="hud-bottom">
+          <div class="speedometer-widget glass">
+            <div id="speed-gauge" class="speedometer-gauge" aria-hidden="true">
+              <div class="gauge-ring"></div>
+              <div class="gauge-ring-inner"></div>
+              <span class="gauge-tick gauge-tick-0"></span>
+              <span class="gauge-tick gauge-tick-1"></span>
+              <span class="gauge-tick gauge-tick-2"></span>
+              <span class="gauge-tick gauge-tick-3"></span>
+              <span class="gauge-tick gauge-tick-4"></span>
+              <span class="gauge-tick gauge-tick-5"></span>
+              <span class="gauge-label gauge-label-0">0</span>
+              <span class="gauge-label gauge-label-200">180</span>
+              <span class="gauge-label gauge-label-400">360</span>
+              <div id="speed-needle" class="gauge-needle"></div>
+              <div class="gauge-center"></div>
+              <div id="speed-digital" class="gauge-digital">0</div>
+            </div>
+            <span class="unit">KM/H</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leaderboard Popup -->
+      <div id="lb-overlay" class="lb-overlay hidden" aria-modal="true" role="dialog">
+        <div class="lb-modal">
+          <div class="lb-header">
+            <span class="lb-trophy">🏆</span>
+            <span class="lb-title">TOP RANKING</span>
+          </div>
+          <div class="lb-list-wrap" id="lb-list-wrap">
+            <div id="lb-list" class="lb-list"></div>
+          </div>
+          <div class="lb-name-row hidden" id="lb-name-row">
+            <input id="lb-name-input" class="lb-name-input" type="text" maxlength="16" placeholder="SEU NOME" autocomplete="off" spellcheck="false" />
+            <button id="lb-confirm-btn" class="btn lb-confirm-btn">OK</button>
+          </div>
+          <button id="lb-skip-btn" class="lb-skip-btn">PULAR</button>
+        </div>
+      </div>
+
+      <!-- Game Over -->
+      <div id="game-over" class="screen" style="display: none;">
+        <h2>FAILED</h2>
+        <div id="final-score">DISTANCE: 0 M</div>
+        <div id="gameover-car-select" class="gameover-car-select">
+          <div class="gameover-car-select-title">CAR FOR RESTART</div>
+          <div id="gameover-cars-grid" class="gameover-cars-grid"></div>
+        </div>
+        <button id="btn-restart" class="btn">RESTART</button>
+        <button id="btn-menu" class="btn">MAIN MENU</button>
+      </div>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+  </div>
+
+  <script src="config/tuning.js"></script>
+  <script src="game.js"></script>
+</body>
+
+</html>
