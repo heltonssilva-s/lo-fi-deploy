@@ -1347,3 +1347,71 @@ input[type=range]::-moz-range-thumb {
 }
 
 .lb-skip-btn:hover { color: rgba(255, 80, 80, 1); text-shadow: 0 0 14px rgba(255, 0, 0, 0.9); }
+
+/* Tablet (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  #hud {
+    padding: 10px 16px;
+  }
+  .menu-title {
+    font-size: clamp(2rem, 6vw, 3rem);
+  }
+  .menu-btn {
+    padding: 12px 24px;
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+  }
+  .shop-section {
+    width: min(85vw, 500px);
+  }
+  .shop-car-focus {
+    width: min(55vw, 280px);
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  #hud {
+    padding: 16px 32px;
+  }
+  .menu-title {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+  }
+  .menu-btn {
+    padding: 16px 48px;
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+  }
+  .shop-section {
+    width: min(70vw, 700px);
+  }
+  #cars-grid.shop-grid {
+    gap: 16px;
+  }
+  .shop-car-nav {
+    width: 64px;
+    height: 64px;
+    font-size: 2.2rem;
+  }
+}
+
+/* Landscape orientation - show rotate message on phones */
+@media (orientation: landscape) and (max-height: 500px) {
+  body::after {
+    content: "GIRE O CELULAR PARA MODO RETRATO";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, #0a0a12 0%, #1a1a2e 100%);
+    color: #66fff2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Vapor', 'Courier New', monospace;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    text-align: center;
+    padding: 20px;
+    z-index: 999999;
+    text-shadow: 0 0 10px #66fff2;
+  }
+  #game-canvas, #ui-layer, .menu-container, #hud {
+    display: none !important;
+  }
+}
