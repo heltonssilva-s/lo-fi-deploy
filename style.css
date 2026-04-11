@@ -59,11 +59,23 @@ body, html {
   width: 100%; height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background: rgba(10, 0, 26, 0.90); /* Darker to compensate for no-blur */
   pointer-events: auto;
   transition: opacity 0.3s;
+  overflow-y: auto;
+  overflow-x: hidden;
+  touch-action: pan-y;
+  padding: env(safe-area-inset-top, 20px) 0 env(safe-area-inset-bottom, 20px) 0;
+}
+
+/* Smart vertical centering that allows safe top scrolling without clipping */
+.screen > :first-child {
+  margin-top: auto;
+}
+.screen > :last-child {
+  margin-bottom: auto;
 }
 
 .hidden {
