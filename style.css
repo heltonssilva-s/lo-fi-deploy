@@ -4,7 +4,6 @@
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
-  touch-action: none;
 }
 
 @font-face {
@@ -42,6 +41,7 @@ body, html {
   height: 100%;
   z-index: 1;
   display: block;
+  touch-action: none;
 }
 
 #ui-layer {
@@ -67,14 +67,15 @@ body, html {
   overflow-y: auto;
   overflow-x: hidden;
   touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
   padding: env(safe-area-inset-top, 20px) 0 env(safe-area-inset-bottom, 20px) 0;
 }
 
 /* Smart vertical centering that allows safe top scrolling without clipping */
-.screen > :first-child {
+.screen:not(#hud) > :first-child {
   margin-top: auto;
 }
-.screen > :last-child {
+.screen:not(#hud) > :last-child {
   margin-bottom: auto;
 }
 
@@ -129,13 +130,31 @@ body, html {
   margin-bottom: 2px;
 }
 
-#score-value, #coins {
+#score-value, #coins, #time-value {
   font-size: clamp(1.1rem, 2.8cqw, 1.8rem);
   color: #fff;
   text-shadow: 0 0 10px rgba(255,255,255,0.5);
   font-weight: 900;
   letter-spacing: 1px;
   line-height: 1;
+}
+
+.hud-timer {
+  background: rgba(10, 0, 26, 0.7);
+  backdrop-filter: blur(5px);
+  padding: clamp(6px, 1.2cqw, 8px) clamp(12px, 2cqw, 20px);
+  border: 2px solid #0ff;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.4), inset 0 0 10px rgba(0, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+#time-value {
+  color: #0ff;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
 }
 
 #coins { color: #ff0; }
