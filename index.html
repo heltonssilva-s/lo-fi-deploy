@@ -12,6 +12,8 @@
   <title>Lo-Fi Super Neon Drive</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/favicon.png">
   <script src="https://pixijs.download/v8.17.1/pixi.min.js"
     onerror="this.onerror=null;this.src='node_modules/pixi.js/dist/pixi.min.js';"></script>
 </head>
@@ -163,6 +165,11 @@
             <span class="unit">KM/H</span>
           </div>
         </div>
+
+        <!-- Touch / Mobile Indicators -->
+        <div id="touch-indicators" class="touch-indicators">
+          &lt; CONTROLE O VEÍCULO &gt;
+        </div>
       </div>
 
       <!-- Leaderboard Popup -->
@@ -178,7 +185,8 @@
           <div class="lb-name-row hidden" id="lb-name-row">
             <div id="lb-name-status" class="lb-name-status"></div>
             <div class="lb-name-input-group">
-              <input id="lb-name-input" class="lb-name-input" type="text" maxlength="25" placeholder="SEU NOME" autocomplete="off" spellcheck="false" />
+              <input id="lb-name-input" class="lb-name-input" type="text" maxlength="25" placeholder="SEU NOME"
+                autocomplete="off" spellcheck="false" />
               <button id="lb-confirm-btn" class="btn lb-confirm-btn">OK</button>
             </div>
           </div>
@@ -196,6 +204,33 @@
         </div>
         <button id="btn-restart" class="btn">RESTART</button>
         <button id="btn-menu" class="btn">MAIN MENU</button>
+      </div>
+
+      <!-- Tutorial Overlay (First Time Only) -->
+      <div id="tutorial-overlay" class="tutorial-overlay hidden" aria-modal="true" role="dialog">
+        <div class="tutorial-modal">
+          <div class="tutorial-header">
+            <h3>COMO JOGAR</h3>
+          </div>
+          <div class="tutorial-content">
+            <p class="tutorial-info">Desvie dos carros e vá o mais longe que puder!</p>
+            <div class="tutorial-legend">
+              <div class="legend-item"><span class="legend-icon color-coin">🪙</span><span class="legend-text">Moeda:
+                  Dinheiro para usar no Shop.</span></div>
+              <div class="legend-item"><span class="legend-icon color-turbo">🗲</span><span class="legend-text">Turbo:
+                  Velocidade + Invencível.</span></div>
+              <div class="legend-item"><span class="legend-icon color-shield">🛡</span><span class="legend-text">Escudo:
+                  Protege de 1 batida.</span></div>
+              <div class="legend-item"><span class="legend-icon color-slow">⏱</span><span class="legend-text">Relógio:
+                  Deixa o tempo lento.</span></div>
+              <div class="legend-item"><span class="legend-icon css-barrier">
+                  <div class="barrier-shape"></div>
+                </span><span class="legend-text">Barreira: Desvie ou perderá a partida!</span></div>
+            </div>
+            <p class="tutorial-mobile-tip">Toque nas bordas da tela para virar!</p>
+          </div>
+          <button id="btn-tutorial-ok" class="btn tutorial-ok-btn">VAMOS LÁ!</button>
+        </div>
       </div>
     </div>
 
