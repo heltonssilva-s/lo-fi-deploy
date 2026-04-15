@@ -35,9 +35,12 @@
         </div>
         <div id="loading-status" class="loading-status">Iniciando...</div>
       </div>
-      <button id="btn-enter" class="btn" style="display: none; align-self: center; justify-self: center; margin-top: 20px; padding: 12px 20px; min-width: auto; width: auto; background: rgba(0, 255, 255, 0.1);">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
-          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+      <button id="btn-enter" class="btn"
+        style="display: none; align-self: center; justify-self: center; margin-top: 20px; padding: 12px 20px; min-width: auto; width: auto; background: rgba(0, 255, 255, 0.1);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3">
+          </path>
         </svg>
       </button>
     </div>
@@ -51,6 +54,7 @@
         <button id="btn-shop" class="btn">SHOP</button>
         <button id="btn-toprank" class="btn">TOP RANK</button>
         <button id="btn-settings" class="btn">SETTINGS</button>
+        <button id="btn-exit" class="btn">EXIT</button>
       </div>
 
       <!-- Top Rank Screen -->
@@ -83,6 +87,16 @@
           <div class="setting-item">
             <span class="label">AMBIENT VOLUME</span>
             <input type="range" id="slider-ambient" min="0" max="1" step="0.1" value="0.5">
+          </div>
+          <div class="setting-item">
+            <span class="label">TOUCH MODE</span>
+            <button id="btn-settings-touch-mode" class="btn btn-settings-toggle">ABSOLUTE</button>
+            <div class="setting-hint">ABSOLUTE = drag anywhere | ZONES = tap left/right</div>
+          </div>
+          <div class="setting-item">
+            <span class="label">MOTION FX</span>
+            <button id="btn-settings-motion" class="btn btn-settings-toggle">SYSTEM</button>
+            <div class="setting-hint">REDUCED decreases shake, blur, and flash intensity.</div>
           </div>
         </div>
         <button id="btn-settings-reset-audio" class="btn btn-settings-reset">DEFAULT</button>
@@ -140,8 +154,21 @@
             <span class="label">SCORE</span>
             <div id="score-value">00000000</div>
           </div>
-          <div class="hud-timer">
-            <div id="time-value">00:00:00</div>
+          <div class="hud-center-stack">
+            <div class="hud-timer">
+              <div id="time-value">00:00:00</div>
+            </div>
+            <div id="flow-widget" class="flow-widget" aria-live="polite" aria-atomic="true">
+              <div class="flow-header">
+                <span class="label">FLOW</span>
+                <span id="flow-multiplier" class="flow-multiplier">1x</span>
+              </div>
+              <div id="flow-feedback" class="flow-feedback">STABLE LINE</div>
+              <div id="flow-bar" class="flow-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+                aria-valuetext="flow 1x">
+                <span class="flow-bar-fill"></span>
+              </div>
+            </div>
           </div>
           <div class="hud-widget glass">
             <span class="label">COINS</span>
@@ -179,7 +206,7 @@
 
         <!-- Touch / Mobile Indicators -->
         <div id="touch-indicators" class="touch-indicators">
-          &lt; CONTROLE O VEÍCULO &gt;
+          &lt; CONTROLE &gt;
         </div>
       </div>
 
@@ -209,9 +236,21 @@
       <div id="game-over" class="screen" style="display: none;">
         <h2>FAILED</h2>
         <div id="final-score"></div>
-        <div id="gameover-car-select" class="gameover-car-select">
-          <div class="gameover-car-select-title">CAR FOR RESTART</div>
-          <div id="gameover-cars-grid" class="gameover-cars-grid"></div>
+        <div id="gameover-select-panel" class="gameover-select-panel">
+          <div id="gameover-car-select" class="gameover-car-select">
+            <div class="gameover-car-select-title">CAR FOR RESTART</div>
+            <div id="gameover-cars-grid" class="gameover-cars-grid"></div>
+          </div>
+          <div id="gameover-loadout-select" class="gameover-loadout-select">
+            <div class="gameover-loadout-section">
+              <div class="gameover-loadout-section-title">TRACKS</div>
+              <div id="gameover-tracks-grid" class="gameover-loadout-grid"></div>
+            </div>
+            <div class="gameover-loadout-section">
+              <div class="gameover-loadout-section-title">MUSIC</div>
+              <div id="gameover-songs-grid" class="gameover-loadout-grid"></div>
+            </div>
+          </div>
         </div>
         <button id="btn-restart" class="btn">RESTART</button>
         <button id="btn-menu" class="btn">MAIN MENU</button>
