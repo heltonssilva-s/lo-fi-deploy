@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -15,10 +15,7 @@
   <link rel="icon" type="image/png" href="img/favicon.png">
   <link rel="apple-touch-icon" href="img/favicon.png">
   <script src="https://pixijs.download/v8.17.1/pixi.min.js"
-    onerror="this.onerror=null;this.src='node_modules/pixi.js/dist/pixi.min.js';"></script>
-  <script>
-    window.__NEON_SUPABASE_KEY__ = 'sb_publishable_lxoKGc4SmrEozoQE6uP-GA_7KcoT-Eu';
-  </script>
+    onerror="this.onerror=null;this.src='vendor/pixi.min.js';"></script>
 </head>
 
 <body>
@@ -27,13 +24,13 @@
     <!-- Loading Screen -->
     <div id="loading-screen">
       <div class="loading-logo-wrap">
-        <div class="loading-subtitle">CARREGANDO...</div>
+        <div class="loading-subtitle">LOADING...</div>
       </div>
       <div class="loading-bar-wrap">
         <div class="loading-bar-track">
           <div id="loading-bar-fill" class="loading-bar-fill"></div>
         </div>
-        <div id="loading-status" class="loading-status">Iniciando...</div>
+        <div id="loading-status" class="loading-status">Starting...</div>
       </div>
       <button id="btn-enter" class="btn"
         style="display: none; align-self: center; justify-self: center; margin-top: 20px; padding: 12px 20px; min-width: auto; width: auto; background: rgba(0, 255, 255, 0.1);">
@@ -63,8 +60,8 @@
         <div class="toprank-table-wrap glass">
           <div class="toprank-header">
             <span class="tr-col-rank">#</span>
-            <span class="tr-col-name">NOME</span>
-            <span class="tr-col-score">PONTOS</span>
+            <span class="tr-col-name">NAME</span>
+            <span class="tr-col-score">POINTS</span>
             <span class="tr-col-dist">DIST</span>
           </div>
           <div id="toprank-list" class="toprank-list"></div>
@@ -74,7 +71,7 @@
 
       <!-- Settings Menu -->
       <div id="settings-menu" class="screen" style="display: none;">
-        <h2>AUDIO CONFIG</h2>
+        <h2>AUDIO SETTINGS</h2>
         <div class="settings-content glass">
           <div class="setting-item">
             <span class="label">MUSIC VOLUME</span>
@@ -108,7 +105,7 @@
         <h2>GARAGE</h2>
         <div class="top-score-display">TOP SCORE: <span id="shop-top-score">0 PTS | DISTANCE 0.0Km</span></div>
         <div class="coins-display">COINS: <span id="shop-coins">0</span></div>
-        <button id="btn-free-coins" class="btn-free-coins">MOEDAS GRÁTIS</button>
+        <button id="btn-free-coins" class="btn-free-coins">FREE COINS</button>
 
         <div class="shop-section shop-section-cars">
           <h3>CARS</h3>
@@ -143,7 +140,7 @@
           </div>
         </div>
 
-        <button id="btn-reset-save" class="btn btn-reset-save">RESET SAVE (-100 COINS)</button>
+        <button id="btn-reset-save" class="btn btn-reset-save">RESET SAVE (REQUIRES 100 COINS)</button>
         <button id="btn-shop-back" class="btn">BACK</button>
       </div>
 
@@ -204,9 +201,23 @@
           </div>
         </div>
 
-        <!-- Touch / Mobile Indicators -->
-        <div id="touch-indicators" class="touch-indicators">
-          &lt; CONTROLE &gt;
+        <div class="mobile-controls" aria-label="Mobile drive controls">
+          <div class="mobile-controls-left" aria-label="Steering controls">
+            <button id="btn-mobile-left" class="mobile-control mobile-control-steer" type="button" aria-label="Steer left" aria-pressed="false">
+              <span class="mobile-control-icon">‹</span>
+            </button>
+            <button id="btn-mobile-right" class="mobile-control mobile-control-steer" type="button" aria-label="Steer right" aria-pressed="false">
+              <span class="mobile-control-icon">›</span>
+            </button>
+          </div>
+          <div class="mobile-controls-right" aria-label="Pedal controls">
+            <button id="btn-mobile-brake" class="mobile-control mobile-control-brake" type="button" aria-label="Brake" aria-pressed="false">
+              <span class="mobile-control-label">BRAKE</span>
+            </button>
+            <button id="btn-mobile-gas" class="mobile-control mobile-control-gas" type="button" aria-label="Gas" aria-pressed="false">
+              <span class="mobile-control-label">GAS</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -223,12 +234,12 @@
           <div class="lb-name-row hidden" id="lb-name-row">
             <div id="lb-name-status" class="lb-name-status"></div>
             <div class="lb-name-input-group">
-              <input id="lb-name-input" class="lb-name-input" type="text" maxlength="25" placeholder="SEU NOME"
+              <input id="lb-name-input" class="lb-name-input" type="text" maxlength="25" placeholder="YOUR NAME"
                 autocomplete="off" spellcheck="false" />
               <button id="lb-confirm-btn" class="btn lb-confirm-btn">OK</button>
             </div>
           </div>
-          <button id="lb-skip-btn" class="lb-skip-btn">PULAR</button>
+          <button id="lb-skip-btn" class="lb-skip-btn">SKIP</button>
         </div>
       </div>
 
@@ -260,26 +271,26 @@
       <div id="tutorial-overlay" class="tutorial-overlay hidden" aria-modal="true" role="dialog">
         <div class="tutorial-modal">
           <div class="tutorial-header">
-            <h3>COMO JOGAR</h3>
+            <h3>HOW TO PLAY</h3>
           </div>
           <div class="tutorial-content">
-            <p class="tutorial-info">Desvie dos carros e vá o mais longe que puder!</p>
+            <p class="tutorial-info">Dodge traffic and go as far as you can!</p>
             <div class="tutorial-legend">
-              <div class="legend-item"><span class="legend-icon color-coin">🪙</span><span class="legend-text">Moeda:
-                  Dinheiro para usar no Shop.</span></div>
+              <div class="legend-item"><span class="legend-icon color-coin">🪙</span><span class="legend-text">Coin:
+                  Currency used in the shop.</span></div>
               <div class="legend-item"><span class="legend-icon color-turbo">🗲</span><span class="legend-text">Turbo:
-                  Velocidade + Invencível.</span></div>
-              <div class="legend-item"><span class="legend-icon color-shield">🛡</span><span class="legend-text">Escudo:
-                  Protege de 1 batida.</span></div>
-              <div class="legend-item"><span class="legend-icon color-slow">⏱</span><span class="legend-text">Relógio:
-                  Deixa o tempo lento.</span></div>
+                  Speed boost + invincibility.</span></div>
+              <div class="legend-item"><span class="legend-icon color-shield">🛡</span><span class="legend-text">Shield:
+                  Absorbs 1 hit.</span></div>
+              <div class="legend-item"><span class="legend-icon color-slow">⏱</span><span class="legend-text">Clock:
+                  Slows time down.</span></div>
               <div class="legend-item"><span class="legend-icon css-barrier">
                   <div class="barrier-shape"></div>
-                </span><span class="legend-text">Barreira: Desvie ou perderá a partida!</span></div>
+                </span><span class="legend-text">Barrier: dodge it or lose the run!</span></div>
             </div>
-            <p class="tutorial-mobile-tip">Toque nas bordas da tela para virar!</p>
+            <p class="tutorial-mobile-tip">Tap the screen edges to steer!</p>
           </div>
-          <button id="btn-tutorial-ok" class="btn tutorial-ok-btn">VAMOS LÁ!</button>
+          <button id="btn-tutorial-ok" class="btn tutorial-ok-btn">LET'S GO!</button>
         </div>
       </div>
     </div>
