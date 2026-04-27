@@ -24,6 +24,17 @@ async function loadForbiddenWords(env, requestUrl = 'https://cloudflare.local/')
 
     forbiddenWordsLoadPromise = (async () => {
         try {
+            const envWords = typeof env?.FORBIDDEN_WORDS === 'string'
+                ? env.FORBIDDEN_WORDS
+                : '';
+            if (envWords.trim().length > 0) {
+                forbiddenWordsCache = envWords
+                    .split(/\r?\n/)
+                    .map((w) => w.trim().toLowerCase())
+                    .filter((w) => w.length > 0);
+                return forbiddenWordsCache;
+            }
+
             const assets = env?.ASSETS;
             if (!assets || typeof assets.fetch !== 'function') {
                 forbiddenWordsCache = [];
@@ -193,12 +204,15 @@ async function selectLeaderboardByKey(env, entryKey) {
     return mapLeaderboardRow(row);
 }
 
-async function insertLeaderboardRow(env, entry) {
+async function insertLeaderboardRow(env, entry, requestUrl = 'https://cloudflare.local/') {
     const cleanName = normalizeName(entry?.name);
     const score = normalizeScore(entry?.score);
     const distance = normalizeDistance(entry?.distance);
     if (score === null) {
         return { error: 'Score inválido.', status: 400 };
+    }
+    if (await containsForbiddenWord(env, cleanName, requestUrl)) {
+        return { error: 'Nome contém termos inválidos.', status: 400 };
     }
 
     const date = typeof entry?.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(entry.date)
