@@ -1,9 +1,0 @@
-{
-  "name": "lo-fi-super-neon-drive",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "node build.mjs",
-    "deploy": "npm run build && wrangler deploy"
-  }
-}

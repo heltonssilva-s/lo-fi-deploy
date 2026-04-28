@@ -1,14 +1,6 @@
 name = "lo-fi-super-neon-drive"
-main = "worker.js"
 compatibility_date = "2026-04-26"
 
 [assets]
-directory = "./dist"
-binding = "ASSETS"
+directory = "."
 not_found_handling = "single-page-application"
-run_worker_first = ["/api/*"]
-
-[[d1_databases]]
-binding = "LEADERBOARD_DB"
-database_name = "lo-fi-super-neon-drive-leaderboard"
-database_id = "b0b7f187-227d-4915-b377-e90f495f3191"
